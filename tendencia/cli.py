@@ -14,6 +14,16 @@ from .inspect_calculator import run_inspect
 
 # np.seterr(all='raise')
 
+colormap = {
+    0: (0, 0, 0),
+    1: (252, 3, 1, 255),
+    2: (247, 132, 2, 255),
+    3: (255, 253, 166, 255),
+    4: (223, 253, 118, 255),
+    5: (47, 246, 3, 255),
+    6: (15, 87, 2, 255),
+}
+
 
 @click.group()
 def cli():
@@ -45,12 +55,12 @@ def inspect(in_file):
     run_inspect(in_file)
 
 
-
 @click.command()
 @click.argument('in_file', required=True)
 def print_func(in_file):
     with rasterio.open(in_file) as src:
         print(src.read())
+
 
 @click.command()
 @click.argument('in_file', required=True)
@@ -60,10 +70,11 @@ def remap(in_file, out_file):
         data = src.read()
         profile = src.profile
         profile.update(count=1, nodata=0, dtype=rasterio.uint8)
-        f = np.frompyfunc(utils.trend_remap, 2, 1) 
+        f = np.frompyfunc(utils.trend_remap, 2, 1)
         out = f(data[0], data[1])
         with rasterio.open(out_file, 'w', **profile) as dst:
             dst.write(out.astype(rasterio.uint8), 1)
+            dst.write_colormap(1, colormap)
 
 
 cli.add_command(trend)
