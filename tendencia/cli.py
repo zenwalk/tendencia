@@ -1,4 +1,3 @@
-
 import time
 import click
 from click import utils
@@ -69,7 +68,7 @@ def remap(in_file, out_file):
     with rasterio.open(in_file) as src:
         data = src.read()
         profile = src.profile
-        data[profile['nodata']] = np.nan
+        data[data == profile['nodata']] = np.nan
         profile.update(count=1, nodata=0, dtype=rasterio.uint8)
         f = np.frompyfunc(utils.trend_remap, 2, 1)
         out = f(data[0], data[1])
@@ -84,7 +83,6 @@ cli.add_command(inspect)
 # cli.add_command(scale)
 cli.add_command(print_func, "print")
 cli.add_command(remap)
-
 
 if __name__ == "__main__":
     cli()
