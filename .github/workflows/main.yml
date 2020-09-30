@@ -40,6 +40,6 @@ jobs:
         run: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 
       - name: publish
-        run: $HOME/.poetry/bin/poetry publish --build --username=$USERNAME --password=$PASSWORD
+        run: $HOME/.poetry/bin/poetry publish --build --username=${{ secrets.USERNAME }} --password=${{ secrets.PASSWORD }}
           
         
