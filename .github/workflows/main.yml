@@ -37,7 +37,7 @@ jobs:
         run: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 
       - name: Run poetry
-        run: $HOME/.poetry/bin/poetry config http-basic.foo $USERNAME $PASSWORD
+        run: $HOME/.poetry/bin/poetry config http-basic.pypi $USERNAME $PASSWORD
         
       - name: publish
         run: $HOME/.poetry/bin/poetry publish --build
