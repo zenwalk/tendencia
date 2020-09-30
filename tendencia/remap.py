@@ -3,7 +3,7 @@ import numpy as np
 
 def trend_remap(slope, p) -> int:
     if np.isnan(slope) or np.isnan(p):
-        return np.nan
+        return 0
     if p <= 0.01 and slope <= 0:
         return 1
     elif 0.01 < p and p <= 0.05 and slope <= 0:

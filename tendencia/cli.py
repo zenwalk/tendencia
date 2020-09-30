@@ -1,12 +1,12 @@
 import time
 import click
-from click import utils
 from numpy.core.numeric import Infinity
 import rasterio
 import numpy as np
 import pymannkendall as mk
 import riomucho
-import tendencia_utils as utils
+# import tendencia_utils as utils
+from . import remap as utils
 from .trend_calculator import run_trend
 from .pearson_calculator import run_pearson
 from .inspect_calculator import run_inspect
@@ -72,8 +72,6 @@ def remap(in_file, out_file):
         profile.update(count=1, nodata=0, dtype=rasterio.uint8)
         f = np.frompyfunc(utils.trend_remap, 2, 1)
         out = f(data[0], data[1])
-        np.nan_to_num(out)
-        print(out)
         with rasterio.open(out_file, 'w', **profile) as dst:
             dst.write(out.astype(rasterio.uint8), 1)
             dst.write_colormap(1, colormap)
