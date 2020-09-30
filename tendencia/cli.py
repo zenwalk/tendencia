@@ -72,7 +72,7 @@ def remap(in_file, out_file):
         profile.update(count=1, nodata=0, dtype=rasterio.uint8)
         f = np.frompyfunc(utils.trend_remap, 2, 1)
         out = f(data[0], data[1])
-        out = np.nan_to_num(out)
+        np.nan_to_num(out)
         with rasterio.open(out_file, 'w', **profile) as dst:
             dst.write(out.astype(rasterio.uint8), 1)
             dst.write_colormap(1, colormap)
