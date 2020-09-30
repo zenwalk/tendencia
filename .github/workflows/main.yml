@@ -39,3 +39,7 @@ jobs:
       - name: Run poetry
         run: $HOME/.poetry/bin/poetry --version
         
+      - name: publish
+        run: poetry publish --build
+          
+        
